@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <div class="content-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Faol xodimlar ro'yxati</h4>
+                        </div>
+                        <div class="mt-4">
+                                <div class="list-group">
+                                {% for xodim in kelgan_xodimlar %}
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">{{ xodim.first_name }} {{ xodim.last_name }}</h5>
+                                            <small class="text-muted">Keldi</small>
+                                        </div>
+                                    </a>
+                                {% empty %}
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">Hech kim</h5>
+                                            <small class="text-muted">Kelmagan</small>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'xodim_list' %}">Xodimlar</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Xodimni o'chirish</a></li>
+            </ol>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Xodimni o'chirish</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <p> Siz {{ xodim.first_name }} {{ xodim.last_name }} ismli xodimni o'chirishni hohlaysizmi?</p>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-danger">O'chirish</button>
+                                <a href="{% url 'xodim_list' %}" class="btn btn-secondary">Bekor qilish</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
