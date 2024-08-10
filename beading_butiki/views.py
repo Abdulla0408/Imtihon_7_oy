@@ -3,8 +3,6 @@ from .models import Xodimlar, Davomat, Profile
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout as auth_logout 
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
-import datetime
 
 
 def login_view(request):
@@ -13,8 +11,8 @@ def login_view(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            auth_login(request, user)  # Django login funksiyasini chaqiramiz
-            return redirect('index')  # Tizimga kirgandan so'ng qaysi sahifaga o'tish
+            auth_login(request, user)
+            return redirect('index')
         else:
             error = "Foydalanuvchi nomi yoki parol noto'g'ri."
             return render(request, 'login.html', {'error': error})
@@ -22,8 +20,8 @@ def login_view(request):
 
 
 def logout_view(request):
-    auth_logout(request)  # Django logout funksiyasini chaqiramiz
-    return redirect('login')  # Tizimdan chiqishdan so'ng qaysi sahifaga o'tish
+    auth_logout(request)
+    return redirect('login')
 
 
 def is_admin(user):
@@ -50,21 +48,21 @@ def header_page(request):
     return render(request, 'header.html')
 
 
-@login_required
+@login_required(login_url='login')
 @admin_required
 def xodim_list(request):
     xodimlar = Xodimlar.objects.all()
     return render(request, 'xodim_list.html', {'xodimlar': xodimlar})
 
 
-@login_required
+@login_required(login_url='login')
 @admin_required
 def xodim_detail(request, pk):
     xodim = get_object_or_404(Xodimlar, pk=pk)
     return render(request, 'xodim_detail.html', {'xodim': xodim})
 
 
-@login_required
+@login_required(login_url='login')
 @admin_required
 def xodim_create(request):
     if request.method == 'POST':
@@ -89,7 +87,7 @@ def xodim_create(request):
     return render(request, 'xodim_create.html')
 
 
-@login_required
+@login_required(login_url='login')
 @admin_required
 def xodim_update(request, pk):
     xodim = get_object_or_404(Xodimlar, pk=pk)
@@ -106,7 +104,7 @@ def xodim_update(request, pk):
     return render(request, 'xodim_update.html', {'xodim': xodim})
 
 
-@login_required
+@login_required(login_url='login')
 @admin_required
 def xodim_delete(request, pk):
     xodim = get_object_or_404(Xodimlar, pk=pk)
@@ -116,7 +114,7 @@ def xodim_delete(request, pk):
     return render(request, 'xodim_delete.html', {'xodim': xodim})
 
 
-@login_required
+@login_required(login_url='login')
 @admin_required
 def davomat(request):
     if request.method == 'POST':
@@ -130,12 +128,14 @@ def davomat(request):
     return render(request, 'davomat.html', {'kelgan_xodimlar': xodimlar, 'davomats':davomats})
 
 
-@login_required
+@login_required(login_url='login')
+@admin_required
 def profile(request):
     return render(request, 'profile.html')
 
 
-@login_required
+@login_required(login_url='login')
+@admin_required
 def profile_update(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
